@@ -1,0 +1,74 @@
+INSERT INTO standings(grade, school, team)
+VALUES
+('4a', 'Berkley', 'Spirit'),
+('4a', 'Knighton', 'Pumas'),
+('3', 'Berkley', 'Spark'),
+('3', 'Berkley', 'Electric'),
+('3', 'Berkley', 'Sonics'),
+('3', 'Berkley', 'Junior White'),
+('4a', 'Peachgrove', 'Dingos'),
+('4a', 'Toku Mapihi', 'Maurea'),
+('PW', 'Knighton', 'Leopards'),
+('PW', 'Te Kowhai', 'Young Guns'),
+('PW', 'Southwell', 'Stripes'),
+('PW', 'Waldorf', 'Wizards'),
+('PW', 'SDA', 'Seventh Day Adventurist'), 
+('PW', 'Bankwood', ' Boltz'),
+('4a', 'Bankwood', 'Blades'),
+('4a', 'Waldorf', 'Vikings'),
+('4b', 'Horotiu', 'Eagles'),
+('4b', 'Knighton', 'Panthers'),
+('3', 'Southwell', 'Scorpions'),
+('3', 'Waldorf', 'Raiders'),
+('4b', 'Te Kowhai', 'Lightning'),
+('4b', 'Southwell', 'Saints'),
+('4b', 'Maeroa', 'Blue'),
+('4b', 'Peachgrove', 'Cantoads'),
+('3', 'Berkley', 'Junior Gold'),
+('3', 'Berkley', 'Junior Blue'),
+('2', 'Waldorf', 'Warriors'),
+('2', 'Berkley', 'Blackhawks'),
+('2', 'Berkley', 'Superstars'),
+('2', 'Peachgrove', 'Kangaroos'),
+('1', 'Horotiu', 'Hawks'),
+('1', 'Southwell', 'Sabres'),
+('1', 'Berkley', 'Shockwave'),
+('1', 'Peachgrove', 'Wombats');
+
+<?php 		
+
+
+		$conn = new mysqli('localhost', 'root', 'mitchell84', 'Hockey')
+or die ('Cannot connect to db');
+
+    $result = $conn->query("SELECT * FROM standings");
+
+    echo "<select name='homeSel' id='homeSel'>";
+
+    while ($row = $result->fetch_assoc()) {
+
+                  unset($id, $name, $school);
+                  $id = $row['teamId'];
+                  $name = $row['team'];
+                  $school = $row['school']; 
+                  $grade = $row['grade'];
+                  echo '<option name="home" id="home" value="'.$id.'">'.$school.'-'.$name.'</option>';
+
+}
+			
+   echo '</select>
+				<label for="score1">Goals</label><input type="text" name="score1" id="score1"><br><br>
+				<label for="away">Away Team</label>';
+				$result2 = $conn ->query("SELECT *  FROM standings");
+				echo '<select id="awaySel" name="awaySel" onchange="check();">'; 
+				while($row2= $result2->fetch_assoc()){
+					unset($id2,$name2,$school2,$grade2);
+					$id2 = $row2['teamId'];
+					$name2 = $row2['team'];
+					$school2 = $row2['school'];
+					$grade2 = $row2['grade'];
+					echo '<option name="away" id="away" value="'.$id2.'">'.$school2.' - '.$name2.'</option>';
+				}
+
+					echo '</select>';
+				?>
